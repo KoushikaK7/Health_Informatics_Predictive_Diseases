@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+    frontend:
+        build: frontend
+        container_name: "web-ui"
+        ports:
+            - "80:80"  # Nginx typically runs on port 80 by default; adjust if different
+        volumes:
+            - ./frontend:/var/www/html  # Optional: Mount the frontend folder for live updates in development
+        depends_on:
+            - backend
+    backend:
+        build: backend
+        container_name: "api"
+        ports:
+            - 5000:5000
