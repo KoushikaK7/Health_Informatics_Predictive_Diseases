@@ -1,0 +1,14 @@
+uvicorn
+fastapi
+pydantic
+typing
+requests
+matplotlib
+pandas
+keras
+statsmodels
+keras
+numpy
+scikit-learn
+prophet
+gunicorn
