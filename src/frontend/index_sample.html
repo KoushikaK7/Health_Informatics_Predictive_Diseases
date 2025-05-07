@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>COVID-19 Cases Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+        .slider {
+            width: 80%;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <input type="range" min="0" max="1" value="0" class="slider" id="dateSlider">
+    <p>Date: <span id="dateLabel">1/22/2020</span></p>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Sample arch
+        var data = [
+            { date: '1/22/2020', latitude: 30.72774991, longitude: -87.72207058, cases: 0 },
+            { date: '1/23/2020', latitude: 30.72774991, longitude: -87.72207058, cases: 0 }
+        ];
+
+        // Initialize the map
+        var map = L.map('map').setView([37.8, -96], 4); // Centered on USA
+
+        // Load map tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        // Marker layer
+        var markers = L.layerGroup().addTo(map);
+
+        // Function to update the map
+        function updateMap(index) {
+            markers.clearLayers(); // Remove all markers
+            var entry = data[index];
+            L.marker([entry.latitude, entry.longitude])
+                .bindPopup("Cases on " + entry.date + ": " + entry.cases)
+                .addTo(markers);
+
+            document.getElementById('dateLabel').innerText = entry.date;
+        }
+
+        // Handle slider change
+        document.getElementById('dateSlider').oninput = function() {
+            updateMap(this.value);
+        };
+
+        updateMap(0); // Initialize map
+    </script>
+</body>
+</html>

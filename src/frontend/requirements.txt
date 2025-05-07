@@ -1,0 +1,7 @@
+# Add requirements here - ref backend/requirements.txt
+streamlit
+requests
+black
+protobuf
+altair
+pillow

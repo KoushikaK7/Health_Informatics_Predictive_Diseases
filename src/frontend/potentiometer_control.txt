@@ -1,0 +1,53 @@
+// Define the pins for the RGB LED
+const int redPin = 9;
+const int greenPin = 10;
+const int bluePin = 11;
+
+// Define the pin for the motor control
+const int motorPin = 3; // PWM pin connected to motor driver
+
+// Define the pin for the potentiometer
+const int potPin = A0;
+
+// Predefined colors for RGB LED
+const int redValue = 255;
+const int greenValue = 0;
+const int blueValue = 255;
+
+void setup() {
+  // Set the RGB LED pins as outputs
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
+
+  // Set the motor pin as output
+  pinMode(motorPin, OUTPUT);
+
+  // Initialize serial communication for debugging (optional)
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Read the value of the potentiometer
+  int potValue = analogRead(potPin);
+
+  // Map the potentiometer value to PWM range (0-255)
+  int pwmValue = map(potValue, 0, 1023, 0, 255);
+
+  // Set the motor speed
+  analogWrite(motorPin, pwmValue);
+
+  // Set the RGB LED color intensity based on the same value
+  analogWrite(redPin, (pwmValue * redValue) / 255);
+  analogWrite(greenPin, (pwmValue * greenValue) / 255);
+  analogWrite(bluePin, (pwmValue * blueValue) / 255);
+
+  // Print the value to the serial monitor for debugging (optional)
+  Serial.print("Potentiometer Value: ");
+  Serial.print(potValue);
+  Serial.print("\tPWM Value: ");
+  Serial.println(pwmValue);
+
+  // Small delay to stabilize readings
+  delay(50);
+}
